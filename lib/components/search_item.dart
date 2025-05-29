@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app/model/news_item.dart';
 
+import '../res/colors.dart';
 import '../screens/details_screen.dart';
+import '../util/common.dart';
 
 class SearchItem extends StatefulWidget {
   const SearchItem({super.key, required this.news});
@@ -59,7 +61,7 @@ class _SearchItemState extends State<SearchItem> {
                       width: screenWidth * 0.20,
                       height: 50.0,
                       child: Image.network(
-                        widget.news[index].image,
+                        widget.news[index].image ?? '',
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -78,11 +80,19 @@ class _SearchItemState extends State<SearchItem> {
                           ); // While loading
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          return SizedBox(
-                            width: screenWidth * 0.2,
-                            height: 50.0,
-                            child: Icon(Icons.error, color: Colors.red),
-                          ); // If error
+                          if (isImageNull(widget.news[index].image)) {
+                            return Container(
+                              color: gray,
+                              width: screenWidth * 0.2,
+                              height: 50.0,
+                            );
+                          } else {
+                            return SizedBox(
+                              width: screenWidth * 0.2,
+                              height: 50.0,
+                              child: Icon(Icons.error, color: Colors.red),
+                            );
+                          }
                         },
                       ),
                     ),

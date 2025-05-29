@@ -13,7 +13,7 @@ class NewsItem {
   String title;
   String time;
   String author;
-  String image;
+  String? image;
   String description;
   String content;
   String url;

@@ -120,7 +120,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               padding: const EdgeInsets.all(16.0),
               child: ClipRRect(
                 child: Image.network(
-                  widget.item.image,
+                  widget.item.image ?? '',
                   width: double.infinity,
                   height: 200.0,
                   fit: BoxFit.cover,

@@ -39,7 +39,7 @@ SavedNews convertNewsItem(NewsItem item) {
     url: item.url,
     content: item.content,
     description: item.description,
-    image: item.image,
+    image: item.image ?? '',
     source: item.source.name,
   );
 }

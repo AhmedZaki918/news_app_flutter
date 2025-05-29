@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/res/colors.dart';
 import 'package:news_app/screens/tab_screen.dart';
-import 'package:news_app/services/news_provider.dart';
 import 'package:news_app/util/category_enum.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

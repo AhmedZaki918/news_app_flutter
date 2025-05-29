@@ -29,3 +29,11 @@ String capitalizeFirstLetter(String text) {
   if (text.isEmpty) return text;
   return text[0].toUpperCase() + text.substring(1);
 }
+
+bool isImageNull(String? image) {
+  if (image == null || image == '') {
+    return true;
+  } else {
+    return false;
+  }
+}

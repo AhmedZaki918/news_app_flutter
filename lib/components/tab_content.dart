@@ -50,7 +50,7 @@ class _TabContentState extends State<TabContent> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    mainItem.image,
+                    mainItem.image ?? '',
                     width: double.infinity,
                     height: 200.0,
                     fit: BoxFit.cover,

@@ -5,6 +5,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../res/colors.dart';
 import '../services/news_provider.dart';
+import '../util/common.dart';
 import 'clickable_icon.dart';
 import 'more_content.dart';
 
@@ -59,7 +60,7 @@ class _ItemListState extends State<ItemList> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       child: Image.network(
-                        news[index].image,
+                        news[index].image ?? '',
                         width: screenWidth * 0.30,
                         height: 65.0,
                         fit: BoxFit.cover,
@@ -80,11 +81,19 @@ class _ItemListState extends State<ItemList> {
                           ); // While loading
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          return SizedBox(
-                            width: screenWidth * 0.30,
-                            height: 65.0,
-                            child: Icon(Icons.error, color: Colors.red),
-                          ); // If error
+                          if (isImageNull(news[index].image)) {
+                            return Container(
+                              color: gray,
+                              width: screenWidth * 0.30,
+                              height: 65.0,
+                            );
+                          } else {
+                            return SizedBox(
+                              width: screenWidth * 0.30,
+                              height: 65.0,
+                              child: Icon(Icons.error, color: Colors.red),
+                            );
+                          }
                         },
                       ),
                     ),

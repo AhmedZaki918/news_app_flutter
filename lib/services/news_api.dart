@@ -3,10 +3,10 @@ import '../util/category_enum.dart';
 import 'networking.dart';
 
 const searchApiUrl =
-    'https://newsapi.org/v2/everything?language=en&pageSize=50&q=';
+    'https://newsapi.org/v2/everything?language=en&pageSize=20&q=';
 const newsApiUrl =
-    'https://newsapi.org/v2/top-headlines?language=en&pageSize=50';
-const apiKey = 'Your_api_key';
+    'https://newsapi.org/v2/top-headlines?language=en&pageSize=20';
+const apiKey = 'YOUR_API_KEY';
 
 class NewsApi {
   Future<List<NewsItem>> search(String keyword) async {

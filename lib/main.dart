@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:news_app/model/saved_news.dart';
 import 'package:news_app/res/colors.dart';
+import 'package:news_app/screens/search_screen.dart';
 import 'package:news_app/services/news_provider.dart';
+import 'package:news_app/util/common.dart';
+import 'package:news_app/util/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 import 'navigation/routes.dart';
@@ -15,6 +18,11 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SavedNewsAdapter());
   await Hive.openBox('newsBox');
+
+  bool isSoundEnabled = await getBoolPreference('sound');
+  if (isSoundEnabled) {
+    runAudio('news_intro.mp3');
+  }
 
   runApp(
     MultiProvider(
@@ -57,21 +65,57 @@ class _HomePageState extends State<HomePage> {
 
   Widget screenTitle() {
     if (_currentIndex == 0) {
-      return Center(
-        child: Text('News App', style: TextStyle(color: Colors.white)),
+      return Row(
+        children: [
+          Expanded(child: Row(children: [])),
+
+          // Center CNN logo
+          Text(
+            'Your.NEWS',
+            style: TextStyle(
+              fontFamily: 'LibreBaskerville',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+
+          // Right section with search icon
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                    );
+                    // Search action here
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       );
     } else if (_currentIndex == 1) {
       return Text(
         'Your saved stories',
         style: TextStyle(
+          fontFamily: 'LibreBaskerville',
           color: Colors.white,
-          fontSize: 24.0,
+          fontSize: 20.0,
           fontWeight: FontWeight.bold,
         ),
       );
     } else {
       return Center(
-        child: Text('Search', style: TextStyle(color: Colors.white)),
+        child: Text(
+          'Settings',
+          style: TextStyle(fontFamily: 'LibreBaskerville', color: Colors.white),
+        ),
       );
     }
   }
@@ -99,7 +143,10 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.bookmark_border),
             label: 'Favorite',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
         ],
       ),
     );

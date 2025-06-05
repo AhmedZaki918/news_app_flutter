@@ -20,7 +20,7 @@ class _TabContentState extends State<TabContent> {
   @override
   Widget build(BuildContext context) {
     var news = context.watch<NewsProvider>().newsList;
-    var mainItem = news[5];
+    var mainItem = news[news.length - 1];
 
     return ListView(
       children: [

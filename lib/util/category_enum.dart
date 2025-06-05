@@ -8,3 +8,5 @@ enum TabType {
   science,
   general,
 }
+
+enum SortType { relevancy, popularity, publishedAt }

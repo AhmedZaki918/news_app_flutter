@@ -81,11 +81,20 @@ class _ItemListState extends State<ItemList> {
                           ); // While loading
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          if (isImageNull(news[index].image)) {
+                          if (isImageNullOrEmpty(news[index].image)) {
                             return Container(
-                              color: gray,
+                              color: Colors.black38,
                               width: screenWidth * 0.30,
                               height: 65.0,
+                              child: Center(
+                                child: Text(
+                                  'No photo',
+                                  style: TextStyle(
+                                    color: Colors.white24,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
                             );
                           } else {
                             return SizedBox(
@@ -114,7 +123,6 @@ class _ItemListState extends State<ItemList> {
                           style: TextStyle(color: Colors.white, fontSize: 17.0),
                         ),
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

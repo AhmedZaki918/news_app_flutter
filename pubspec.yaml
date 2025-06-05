@@ -21,6 +21,9 @@ dependencies:
   timeago: ^3.7.1
   url_launcher: ^6.3.1
   intl: ^0.20.2
+  shared_preferences: ^2.5.3
+  audioplayers: ^6.4.0
+  flutter_switch: ^0.3.2
 
 
 dev_dependencies:
@@ -35,8 +38,10 @@ flutter:
 
   assets:
     - images/
+    - assets/
   uses-material-design: true
 
-
-
-
+  fonts:
+   - family: LibreBaskerville
+     fonts:
+       - asset: fonts/LibreBaskerville-Regular.ttf

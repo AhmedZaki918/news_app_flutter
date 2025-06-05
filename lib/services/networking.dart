@@ -9,6 +9,7 @@ class NetworkHelper {
   Future getData() async {
     var newUrl = Uri.parse(url);
     http.Response response = await http.get(newUrl);
+    print('-------Status Code: ${response.statusCode}');
 
     if (response.statusCode == 200) {
       var data = response.body;

@@ -80,7 +80,7 @@ class _SearchItemState extends State<SearchItem> {
                           ); // While loading
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          if (isImageNull(widget.news[index].image)) {
+                          if (isImageNullOrEmpty(widget.news[index].image)) {
                             return Container(
                               color: gray,
                               width: screenWidth * 0.2,

@@ -29,10 +29,10 @@ void showMoreContent(
         }
 
         deleteArticle(article.time);
-        showCustomSnackBar(context, 'Item Removed');
+        showCustomSnackBar(context, 'Removed from Saved Stories');
       } else {
         saveArticle(article);
-        showCustomSnackBar(context, 'Item Saved');
+        showCustomSnackBar(context, 'Saved to Your News');
       }
     },
   );

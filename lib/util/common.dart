@@ -1,8 +1,11 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:news_app/util/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../model/source.dart';
 import 'hive_manager.dart';
 
 var box = Hive.box('newsBox');
@@ -30,10 +33,33 @@ String capitalizeFirstLetter(String text) {
   return text[0].toUpperCase() + text.substring(1);
 }
 
-bool isImageNull(String? image) {
+bool isImageNullOrEmpty(String? image) {
   if (image == null || image == '') {
     return true;
   } else {
     return false;
   }
+}
+
+Future<String> loadCategoryInPreferences() async {
+  var category = await getPreference('category_search');
+  if (category.isEmpty) {
+    return 'General';
+  } else {
+    return category;
+  }
+}
+
+Future<String> loadSourceInPreferences() async {
+  var source = await getPreference('source_search');
+  if (source.isEmpty) {
+    return generalDomains().first;
+  } else {
+    return source;
+  }
+}
+
+Future<void> runAudio(String audio) async {
+  final player = AudioPlayer();
+  await player.play(AssetSource(audio));
 }

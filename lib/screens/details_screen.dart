@@ -69,12 +69,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           setState(() {
                             deleteArticle(widget.item.time);
                           });
-                          showCustomSnackBar(context, 'Item Removed');
                         } else {
                           setState(() {
                             saveArticle(widget.item);
                           });
-                          showCustomSnackBar(context, 'Item Saved');
+                          showCustomSnackBar(context, 'Saved to Your News');
                         }
                       },
                       iconColor: Colors.white,
@@ -84,7 +83,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0, top: 24.0),
+              padding: const EdgeInsets.only(
+                left: 16.0,
+                top: 24.0,
+                right: 16.0,
+              ),
               child: Text(
                 style: TextStyle(
                   color: Colors.white,

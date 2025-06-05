@@ -4,4 +4,6 @@ import 'package:news_app/screens/favorite_screen.dart';
 import 'package:news_app/screens/home_screen.dart';
 import 'package:news_app/screens/search_screen.dart';
 
-final List<Widget> pages = [HomeScreen(), FavoriteScreen(), SearchScreen()];
+import '../screens/settings_screen.dart';
+
+final List<Widget> pages = [HomeScreen(), FavoriteScreen(), SettingsScreen()];

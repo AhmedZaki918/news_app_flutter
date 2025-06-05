@@ -6,7 +6,7 @@ const searchApiUrl =
     'https://newsapi.org/v2/everything?language=en&pageSize=100&q=';
 const newsApiUrl =
     'https://newsapi.org/v2/top-headlines?language=en&pageSize=100';
-const apiKey = 'ca9c1cab47bb435ca4288f360849c3d2';
+const apiKey = 'Your_Api_Key';
 
 class NewsApi {
   Future<List<NewsItem>> search(String keyword, String sortType) async {

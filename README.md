@@ -14,8 +14,7 @@ News app develped by flutter and implemented with newsapi to fetch any news you 
 
 ## Screenshots
 
-<img src="images/1-home.jpg" width="250"> <img src="images/2-general.jpg" width="250">
-<img src="images/3-details.jpg" width="250">
+<img src="images/1-home.jpg" width="250"> <img src="images/3-details.jpg" width="250">
 <img src="images/4-favorite.jpg" width="250">
 <img src="images/5-search.jpg" width="250">
 <img src="images/6-filter_search.jpg" width="250">

@@ -10,7 +10,8 @@
 
 ## General info
 
-News app develped by flutter and implemented with newsapi to fetch any news you want by fiter a category name, sort by ,source of the news ex:cnn,bbc and search functionality too.
+Developed a News App using Flutter, integrated with the NewsAPI to deliver real-time news content.
+The app features category-based filtering, sorting options, source-specific news retrieval (e.g., CNN, BBC), and a robust search functionality to help users find relevant news efficiently.
 
 ## Screenshots
 

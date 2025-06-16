@@ -17,7 +17,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> with RouteAware {
   String? selectedCategory = '';
-  bool isSoundEnabled = false;
+  bool isSoundEnabled = true;
 
   @override
   void didChangeDependencies() {

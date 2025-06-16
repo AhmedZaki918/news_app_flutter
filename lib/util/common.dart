@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:news_app/util/shared_preferences.dart';
@@ -62,4 +63,14 @@ Future<String> loadSourceInPreferences() async {
 Future<void> runAudio(String audio) async {
   final player = AudioPlayer();
   await player.play(AssetSource(audio));
+}
+
+Future<bool> checkConnection() async {
+  final connectivityResult = await Connectivity().checkConnectivity();
+
+  // Check if the result is either mobile or wifi
+  final connected =
+      connectivityResult.contains(ConnectivityResult.mobile) ||
+      connectivityResult.contains(ConnectivityResult.wifi);
+  return connected;
 }

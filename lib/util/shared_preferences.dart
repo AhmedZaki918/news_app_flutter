@@ -17,5 +17,5 @@ Future<void> saveBoolPreference(String key, bool value) async {
 
 Future<bool> getBoolPreference(String key) async {
   final prefs = await SharedPreferences.getInstance();
-  return prefs.getBool(key) ?? false;
+  return prefs.getBool(key) ?? true;
 }

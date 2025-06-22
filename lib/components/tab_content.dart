@@ -19,6 +19,7 @@ class TabContent extends StatefulWidget {
 class _TabContentState extends State<TabContent> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     var news = context.watch<NewsProvider>().newsList;
     var mainItem = news[news.length - 1];
 
@@ -99,12 +100,15 @@ class _TabContentState extends State<TabContent> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text(
-                          textAlign: TextAlign.start,
-                          mainItem.author,
-                          style: TextStyle(color: lightGray, fontSize: 16.0),
+                      SizedBox(
+                        width: screenWidth * 0.80,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text(
+                            textAlign: TextAlign.start,
+                            mainItem.author,
+                            style: TextStyle(color: lightGray, fontSize: 16.0),
+                          ),
                         ),
                       ),
 

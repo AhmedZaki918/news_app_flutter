@@ -10,6 +10,7 @@ import 'package:news_app/util/common.dart';
 import 'package:news_app/util/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
+import 'components/no_connection_screen.dart';
 import 'navigation/routes.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver =
@@ -19,11 +20,6 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SavedNewsAdapter());
   await Hive.openBox('newsBox');
-
-  bool isSoundEnabled = await getBoolPreference('sound');
-  if (isSoundEnabled) {
-    runAudio('news_intro.mp3');
-  }
 
   runApp(
     MultiProvider(
@@ -61,6 +57,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     checkNetworkConnection();
+
     // Change the system navigation bar color to black
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(systemNavigationBarColor: background),
@@ -71,9 +68,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       isCheckingConnection = true;
     });
-    bool connection = await checkConnection();
+    bool isConnectionExist = await checkConnection();
+    if (isConnectionExist) {
+      enableSound();
+    }
     setState(() {
-      isDeviceConnected = connection;
+      isDeviceConnected = isConnectionExist;
       isCheckingConnection = false;
     });
   }
@@ -135,6 +135,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  enableSound() async {
+    bool isSoundEnabled = await getBoolPreference('sound');
+    if (isSoundEnabled) {
+      runAudio('news_intro.mp3');
+    }
+  }
+
   Widget mainUi() {
     if (isCheckingConnection) {
       return LoadingContent();
@@ -170,42 +177,9 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else {
-      return Scaffold(
-        backgroundColor: background,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 50.0),
-              Image.asset(
-                'images/no_connection.png',
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.high,
-              ),
-              SizedBox(height: 8.0),
-              GestureDetector(
-                onTap: () {
-                  checkNetworkConnection();
-                },
-                child: Column(
-                  children: [
-                    Text(
-                      'No Connection',
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text('Try Again', style: TextStyle(color: Colors.grey)),
-                  ],
-                ),
-              ),
-            ],
-            // child: Text(
-            //   'No connection',
-            //   style: TextStyle(color: Colors.white, fontSize: 25.0),
-            // ),
-          ),
-        ),
-      );
+      return displayNoConnection(() {
+        checkNetworkConnection();
+      });
     }
   }
 

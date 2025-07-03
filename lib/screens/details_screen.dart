@@ -19,6 +19,22 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    bool isDescriptionExist() {
+      if (widget.item.description.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    bool isContentExist() {
+      if (widget.item.content.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     return Scaffold(
       backgroundColor: background,
       body: SafeArea(
@@ -152,48 +168,104 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 16.0,
-              ),
-              child: Text(
-                widget.item.description,
-                style: TextStyle(color: Colors.white, fontSize: 20.0),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 16.0,
-                left: 24.0,
-                right: 24.0,
-              ),
-              child: Text(
-                widget.item.content,
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                openUrlLink(widget.item.url);
-              },
+            Visibility(
+              visible: isDescriptionExist(),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  left: 24.0,
-                  bottom: 16.0,
-                  top: 8.0,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 16.0,
                 ),
                 child: Text(
-                  'Read more..',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.white70,
-                  ),
+                  widget.item.description,
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),
+            ),
+
+            Visibility(
+              visible: isContentExist(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 16.0,
+                  left: 24.0,
+                  right: 24.0,
+                ),
+                child: Text(
+                  widget.item.content,
+                  style: TextStyle(color: Colors.white, fontSize: 18.0),
+                ),
+              ),
+            ),
+            ReadMore(
+              widget: widget,
+              isContentExist: isContentExist(),
+              isDescriptionExist: isDescriptionExist(),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ReadMore extends StatelessWidget {
+  const ReadMore({
+    super.key,
+    required this.widget,
+    required this.isContentExist,
+    required this.isDescriptionExist,
+  });
+
+  final DetailsScreen widget;
+  final bool isContentExist;
+  final bool isDescriptionExist;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        openUrlLink(widget.item.url);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Visibility(
+            visible: !isDescriptionExist && !isContentExist,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                bottom: 16.0,
+                top: 4.0,
+                right: 8.0,
+              ),
+              child: Text(
+                textAlign: TextAlign.end,
+                'Read more..',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: isDescriptionExist && isContentExist,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                bottom: 16.0,
+                top: 8.0,
+              ),
+              child: Text(
+                'Read more..',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

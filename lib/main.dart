@@ -1,0 +1,192 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:news_app/res/colors.dart';
+import 'package:news_app/core/network/news_api.dart';
+import 'package:news_app/util/bottom_bar_pages.dart';
+import 'package:news_app/util/common.dart';
+import 'package:news_app/util/shared_preferences.dart';
+
+import 'core/components/loading_screen.dart';
+import 'core/components/no_connection_screen.dart';
+import 'core/di/app_di.dart';
+import 'core/model/saved_news.dart';
+import 'core/navigation/app_router.dart';
+import 'core/navigation/routes.dart';
+
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
+void main() async {
+  setupGetIt();
+  await Hive.initFlutter();
+  Hive.registerAdapter(SavedNewsAdapter());
+  await Hive.openBox('newsBox');
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  bool isDeviceConnected = false;
+  bool isCheckingConnection = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkNetworkConnection();
+
+    // Change the system navigation bar color to black
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+          systemNavigationBarColor: background
+      ),
+    );
+  }
+
+  Future<void> checkNetworkConnection() async {
+    setState(() {
+      isCheckingConnection = true;
+    });
+    bool isConnectionExist = await checkConnection();
+    if (isConnectionExist) {
+      enableSound();
+    }
+    setState(() {
+      isDeviceConnected = isConnectionExist;
+      isCheckingConnection = false;
+    });
+  }
+
+  Widget screenTitle() {
+    if (_currentIndex == 0) {
+      return Row(
+        children: [
+          Expanded(child: Row(children: [])),
+
+          // Center CNN logo
+          Text(
+            'Your.NEWS',
+            style: TextStyle(
+              fontFamily: 'LibreBaskerville',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+
+          // Right section with search icon
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    context.push(
+                        Routes.searchScreen,
+                        extra: getIt<NewsApi>()
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    } else if (_currentIndex == 1) {
+      return Text(
+        'Your saved stories',
+        style: TextStyle(
+          fontFamily: 'LibreBaskerville',
+          color: Colors.white,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    } else {
+      return Center(
+        child: Text(
+          'Settings',
+          style: TextStyle(fontFamily: 'LibreBaskerville', color: Colors.white),
+        ),
+      );
+    }
+  }
+
+  enableSound() async {
+    bool isSoundEnabled = await getBoolPreference('sound');
+    if (isSoundEnabled) {
+      runAudio('news_intro.mp3');
+    }
+  }
+
+  Widget mainUi() {
+    if (isCheckingConnection) {
+      return LoadingContent();
+    }
+
+    if (isDeviceConnected) {
+      return Scaffold(
+        backgroundColor: background,
+        appBar: AppBar(
+            backgroundColor: background,
+            title: screenTitle(),
+        ),
+        body: pages[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Colors.white,
+          unselectedItemColor: lightGray,
+          backgroundColor: gray,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+              screenTitle();
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark_border),
+              label: 'Favorite',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
+            ),
+          ],
+        ),
+      );
+    } else {
+      return displayNoConnection(() {
+        checkNetworkConnection();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return mainUi();
+  }
+}

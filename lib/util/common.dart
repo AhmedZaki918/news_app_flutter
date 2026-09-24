@@ -1,32 +1,30 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:news_app/util/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/model/source.dart';
-import 'hive_manager.dart';
 
-var box = Hive.box('newsBox');
 
-void shareContent(String url) {
+void shareContent(String? url) {
   SharePlus.instance.share(ShareParams(text: url));
 }
 
-void openUrlLink(String url) async {
-  if (await canLaunchUrl(Uri.parse(url))) {
+void openUrlLink(String? url) async {
+  if (await canLaunchUrl(Uri.parse(url!))) {
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }
 
-IconData displaySaveIcon(String key) {
-  if (isArticleSaved(key)) {
-    return Icons.bookmark;
-  } else {
-    return Icons.bookmark_border;
-  }
+IconData displaySaveIcon() {
+  return Icons.bookmark_border;
+  // if (isArticleSaved(key)) {
+  //   return Icons.bookmark;
+  // } else {
+  //   return Icons.bookmark_border;
+  // }
 }
 
 String capitalizeFirstLetter(String text) {

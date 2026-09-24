@@ -1,10 +1,10 @@
-import '../../home/data/model/news_item.dart';
+import '../../home/data/model/news_response.dart';
 
 class SearchState {
   final UiState uiState;
   final String selectedSource;
   final String sortType;
-  final List<NewsItem> newsItems;
+  final List<Articles> newsItems;
 
   SearchState({
     this.uiState = const Initial(),
@@ -16,7 +16,7 @@ class SearchState {
   SearchState copyWith({
     UiState? uiState,
     String? selectedSource,
-    List<NewsItem>? newsItems,
+    List<Articles>? newsItems,
     String? sortType,
     String? searchKeyword
   }) {
@@ -41,10 +41,10 @@ class Loading<T> extends UiState<T> {
   const Loading();
 }
 
-class Success<T> extends UiState<T> {
+class SuccessResponse<T> extends UiState<T> {
   final T data;
 
-  const Success(this.data);
+  const SuccessResponse(this.data);
 }
 
 class Error<T> extends UiState<T> {

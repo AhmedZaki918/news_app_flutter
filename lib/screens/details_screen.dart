@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:news_app/features/home/data/model/news_item.dart';
+import 'package:news_app/features/home/data/model/news_response.dart';
 import 'package:news_app/res/colors.dart';
 
 import '../core/components/clickable_icon.dart';
-import '../core/components/snackbar_message.dart';
 import '../util/common.dart';
-import '../util/hive_manager.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen(this.item, {super.key});
 
-  final NewsItem item;
+  final Articles item;
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -21,8 +19,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
 
-    bool isDescriptionExist = widget.item.description.isNotEmpty  ? true  : false;
-    bool isContentExist = widget.item.content.isNotEmpty ? true : false;
+    bool isDescriptionExist;
+    if (widget.item.description!.isNotEmpty) {
+      isDescriptionExist = true;
+    } else {
+      isDescriptionExist = false;
+    }
+    bool isContentExist;
+    if (widget.item.content!.isNotEmpty) {
+      isContentExist = true;
+    } else {
+      isContentExist = false;
+    }
 
     return Scaffold(
       backgroundColor: background,
@@ -63,23 +71,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       iconColor: Colors.white,
                     ),
                     CustomIcon(
-                      icon: displaySaveIcon(widget.item.time),
+                      icon: displaySaveIcon(),
                       padding: EdgeInsets.only(
                         left: 8.0,
                         top: 16.0,
                         right: 8.0,
                       ),
                       onIconPressed: () {
-                        if (isArticleSaved(widget.item.time)) {
-                          setState(() {
-                            deleteArticle(widget.item.time);
-                          });
-                        } else {
-                          setState(() {
-                            saveArticle(widget.item);
-                          });
-                          showCustomSnackBar(context, 'Saved to Your News');
-                        }
+                        // if (isArticleSaved(widget.item.time)) {
+                        //   setState(() {
+                        //     deleteArticle(widget.item.time);
+                        //   });
+                        // } else {
+                        //   setState(() {
+                        //     saveArticle(widget.item);
+                        //   });
+                        //   showCustomSnackBar(context, 'Saved to Your News');
+                        // }
                       },
                       iconColor: Colors.white,
                     ),
@@ -99,7 +107,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
-                widget.item.title,
+                widget.item.title.toString(),
               ),
             ),
             Padding(
@@ -110,7 +118,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   Expanded(
                     child: Text(
                       overflow: TextOverflow.ellipsis,
-                      widget.item.author,
+                      widget.item.author.toString(),
                       style: TextStyle(color: Colors.white70),
                     ),
                   ),
@@ -151,7 +159,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 16.0),
               child: Text(
-                widget.item.source.name,
+                widget.item.source!.name,
                 style: TextStyle(color: lightGray),
                 textAlign: TextAlign.end,
               ),
@@ -165,7 +173,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   vertical: 16.0,
                 ),
                 child: Text(
-                  widget.item.description,
+                  widget.item.description.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
               ),
@@ -180,7 +188,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   right: 24.0,
                 ),
                 child: Text(
-                  widget.item.content,
+                  widget.item.content.toString(),
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ),

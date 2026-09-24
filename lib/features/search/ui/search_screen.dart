@@ -9,14 +9,12 @@ import '../logic/search_cubit.dart';
 import '../logic/search_state.dart';
 import 'search_item.dart';
 import '../../../core/navigation/routes.dart';
-import '../../../core/network/news_api.dart';
 import '../../../main.dart';
 import '../../../util/category_enum.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen(this.newsApi, {super.key});
+  const SearchScreen( {super.key});
 
-  final NewsApi newsApi;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -312,7 +310,7 @@ class SearchBlocListener extends StatelessWidget {
           case Loading():
             return LoadingContent();
 
-          case Success():
+          case SuccessResponse():
             return Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 8.0,

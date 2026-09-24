@@ -1,34 +1,43 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/search/logic/search_state.dart';
 
-import '../../../core/network/news_api.dart';
+import '../../../core/network/api_result.dart';
 import '../../../util/shared_preferences.dart';
-import '../../home/data/model/news_item.dart';
+import '../../home/data/model/news_response.dart';
+import '../data/search_repo.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  final NewsApi _newsApi;
+  final SearchRepo _searchRepo;
 
-  SearchCubit(this._newsApi) : super(SearchState());
+  SearchCubit(this._searchRepo) : super(SearchState());
 
   void searchOnNews(String sortType, String keyword) async {
     emit(state.copyWith(uiState: Loading(), sortType: sortType));
-    List<NewsItem> news = [];
+    final ApiResult<NewsResponse> response;
 
-    try{
-      if (state.selectedSource == '' || state.selectedSource == 'all sources') {
-        news = await _newsApi.search(keyword, sortType);
-      } else {
-        news = await _newsApi.searchByDomain(
-          keyword,
-          sortType,
-          state.selectedSource,
-        );
-      }
-      emit(state.copyWith(uiState: Success(news), newsItems: news));
-
-    } catch (error){
-      emit(state.copyWith(uiState: Error(error.toString())));
+    if (state.selectedSource == '' || state.selectedSource == 'all sources') {
+      response = await _searchRepo.search(keyword, sortType);
+    } else {
+      response = await _searchRepo.searchByDomain(
+        keyword,
+        sortType,
+        state.selectedSource,
+      );
     }
+
+    response.when(
+      success: (newsResponse) async {
+        emit(
+          state.copyWith(
+            uiState: SuccessResponse(newsResponse),
+            newsItems: newsResponse.articles,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(state.copyWith(uiState: Error(error.toString())));
+      },
+    );
   }
 
   void clearSearchData() {

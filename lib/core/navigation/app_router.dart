@@ -3,19 +3,19 @@ import 'package:go_router/go_router.dart';
 import 'package:news_app/core/di/app_di.dart';
 import 'package:news_app/core/navigation/routes.dart';
 import 'package:news_app/features/search/logic/search_cubit.dart';
-import 'package:news_app/screens/favorite_screen.dart';
+import 'package:news_app/features/favorite/ui/favorite_screen.dart';
 import 'package:news_app/screens/preference/category_screen.dart';
 import 'package:news_app/screens/preference/source_screen.dart';
 import 'package:news_app/screens/settings_screen.dart';
 
-import '../../features/home/data/model/news_item.dart';
+import '../../features/favorite/logic/favorite_cubit.dart';
+import '../../features/home/data/model/news_response.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/search/ui/search_screen.dart';
 import '../../main.dart';
 import '../../screens/details_screen.dart';
 import '../../features/search/ui/search_tabs.dart';
 import '../../util/category_enum.dart';
-import '../network/news_api.dart';
 
 final GoRouter router = GoRouter(
   observers: [routeObserver],
@@ -53,7 +53,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Routes.detailsScreen,
       builder: (context, state) {
-        final article = state.extra as NewsItem;
+        final article = state.extra as Articles;
         return DetailsScreen(article);
       },
     ),
@@ -62,10 +62,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Routes.searchScreen,
       builder: (context, state) {
-        final newsApi = state.extra as NewsApi;
         return BlocProvider(
           create: (context) => SearchCubit(getIt())..loadSource(),
-          child: SearchScreen(newsApi),
+          child: SearchScreen(),
         );
       },
     ),

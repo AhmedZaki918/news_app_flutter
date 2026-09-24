@@ -12,10 +12,10 @@ class Loading<T> extends HomeState<T> {
   const Loading();
 }
 
-class Success<T> extends HomeState<T> {
+class SuccessResponse<T> extends HomeState<T> {
   final T data;
 
-  const Success(this.data);
+  const SuccessResponse(this.data);
 }
 
 class Error<T> extends HomeState<T> {

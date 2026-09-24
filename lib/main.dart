@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:news_app/res/colors.dart';
-import 'package:news_app/core/network/news_api.dart';
 import 'package:news_app/util/bottom_bar_pages.dart';
 import 'package:news_app/util/common.dart';
 import 'package:news_app/util/shared_preferences.dart';
@@ -11,7 +9,6 @@ import 'package:news_app/util/shared_preferences.dart';
 import 'core/components/loading_screen.dart';
 import 'core/components/no_connection_screen.dart';
 import 'core/di/app_di.dart';
-import 'core/model/saved_news.dart';
 import 'core/navigation/app_router.dart';
 import 'core/navigation/routes.dart';
 
@@ -20,10 +17,6 @@ final RouteObserver<ModalRoute<void>> routeObserver =
 
 void main() async {
   setupGetIt();
-  await Hive.initFlutter();
-  Hive.registerAdapter(SavedNewsAdapter());
-  await Hive.openBox('newsBox');
-
   runApp(const MyApp());
 }
 
@@ -103,10 +96,7 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                   icon: Icon(Icons.search, color: Colors.white),
                   onPressed: () {
-                    context.push(
-                        Routes.searchScreen,
-                        extra: getIt<NewsApi>()
-                    );
+                    context.push(Routes.searchScreen);
                   },
                 ),
               ],

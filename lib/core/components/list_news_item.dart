@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:news_app/screens/details_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../../features/home/data/model/news_item.dart';
+import '../../features/home/data/model/news_response.dart';
 import '../../res/colors.dart';
 import '../../util/common.dart';
 import '../navigation/routes.dart';
@@ -11,7 +11,7 @@ import 'clickable_icon.dart';
 import 'more_content.dart';
 
 class ItemList extends StatefulWidget {
-  final List<NewsItem> news;
+  final List<Articles> news;
   const ItemList({super.key, required this.news});
 
 
@@ -119,7 +119,7 @@ class _ItemListState extends State<ItemList> {
                         padding: const EdgeInsets.only(right: 30.0),
                         child: Text(
                           maxLines: 5,
-                          widget.news[index].title,
+                          widget.news[index].title.toString(),
                           style: TextStyle(color: Colors.white, fontSize: 17.0),
                         ),
                       ),
@@ -136,14 +136,14 @@ class _ItemListState extends State<ItemList> {
                                   child: Text(
                                     maxLines: 2,
                                     textAlign: TextAlign.start,
-                                    widget.news[index].author,
+                                    widget.news[index].author.toString(),
                                     style: TextStyle(color: lightGray),
                                   ),
                                 ),
 
                                 Text(
                                   textAlign: TextAlign.start,
-                                  formatTime(widget.news[index].time),
+                                  formatTime(widget.news[index].time.toString()),
                                   style: TextStyle(color: lightGray),
                                 ),
                               ],

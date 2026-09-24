@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:news_app/features/home/data/model/news_item.dart';
+import 'package:news_app/features/home/data/model/news_response.dart';
 
 import '../../../res/colors.dart';
 import '../../../util/common.dart';
@@ -10,7 +10,7 @@ import '../../../core/navigation/routes.dart';
 
 class SearchItem extends StatefulWidget {
   const SearchItem({super.key, required this.news});
-  final List<NewsItem> news;
+  final List<Articles> news;
 
   @override
   State<SearchItem> createState() => _SearchItemState();
@@ -50,7 +50,7 @@ class _SearchItemState extends State<SearchItem> {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
                         maxLines: 3,
-                        widget.news[index].title,
+                        widget.news[index].title.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 17.0),
                       ),
                     ),
@@ -101,7 +101,7 @@ class _SearchItemState extends State<SearchItem> {
               ),
               SizedBox(height: 12.0),
               Text(
-                formatDate(widget.news[index].time),
+                formatDate(widget.news[index].time.toString()),
                 style: TextStyle(color: Colors.white60),
               ),
               Container(

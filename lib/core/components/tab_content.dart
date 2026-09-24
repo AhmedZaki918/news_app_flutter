@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:news_app/features/home/data/model/news_item.dart';
+import 'package:news_app/features/home/data/model/news_response.dart';
 
 import '../../res/colors.dart';
 import '../navigation/routes.dart';
@@ -11,7 +11,7 @@ class TabContent extends StatefulWidget {
   const TabContent({super.key, required this.tabName, required this.news});
 
   final String tabName;
-  final List<NewsItem> news;
+  final List<Articles> news;
 
   @override
   State<TabContent> createState() => _TabContentState();
@@ -75,7 +75,7 @@ class _TabContentState extends State<TabContent> {
                 padding: const EdgeInsets.only(right: 16.0),
                 child: Text(
                   textAlign: TextAlign.end,
-                  mainItem.source.name,
+                  mainItem.source!.name,
                   style: TextStyle(color: lightGray, fontSize: 13.0),
                 ),
               ),
@@ -86,7 +86,7 @@ class _TabContentState extends State<TabContent> {
                 ),
                 child: Text(
                   textAlign: TextAlign.start,
-                  mainItem.title,
+                  mainItem.title.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 25.0,
@@ -106,7 +106,7 @@ class _TabContentState extends State<TabContent> {
                           padding: const EdgeInsets.only(left: 16.0),
                           child: Text(
                             textAlign: TextAlign.start,
-                            mainItem.author,
+                            mainItem.author.toString(),
                             style: TextStyle(color: lightGray, fontSize: 16.0),
                           ),
                         ),
@@ -116,7 +116,7 @@ class _TabContentState extends State<TabContent> {
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
                           textAlign: TextAlign.start,
-                          mainItem.time,
+                          mainItem.time.toString(),
                           style: TextStyle(color: lightGray, fontSize: 16.0),
                         ),
                       ),

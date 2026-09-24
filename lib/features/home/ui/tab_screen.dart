@@ -30,7 +30,7 @@ class _TabScreen extends State<TabScreen> {
       builder: (context, state) {
         if (state is Loading) {
           return LoadingContent();
-        } else if (state is Success) {
+        } else if (state is SuccessResponse) {
           return TabContent(
             tabName: capitalizeFirstLetter(widget.tabType.name),
             news: state.data,

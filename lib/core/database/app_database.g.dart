@@ -76,7 +76,6 @@ class $ArticlesTable extends Articles with TableInfo<$ArticlesTable, Article> {
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
   static const VerificationMeta _contentMeta = const VerificationMeta(
     'content',

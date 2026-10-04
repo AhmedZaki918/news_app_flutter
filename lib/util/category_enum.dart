@@ -1,5 +1,4 @@
 enum TabType {
-  top,
   sports,
   technology,
   entertainment,

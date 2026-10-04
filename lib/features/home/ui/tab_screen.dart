@@ -18,31 +18,29 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreen extends State<TabScreen> {
+
   @override
   void initState() {
     super.initState();
-    getNewsByCategory(context);
+    context.read<HomeCubit>().emitHomeState(widget.tabType);
   }
+
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        if (state is Loading) {
+        if (state.uiState is Loading) {
           return LoadingContent();
-        } else if (state is SuccessResponse) {
+        } else if (state.uiState is SuccessResponse) {
           return TabContent(
             tabName: capitalizeFirstLetter(widget.tabType.name),
-            news: state.data,
+            state: state,
           );
         } else {
           return const Center(child: Text('Something went wrong'));
         }
       },
     );
-  }
-
-  void getNewsByCategory(BuildContext context) {
-    context.read<HomeCubit>().emitHomeState(widget.tabType);
   }
 }

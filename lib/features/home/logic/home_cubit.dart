@@ -11,24 +11,25 @@ class HomeCubit extends Cubit<HomeState> {
   final HomeRepo _homeRepo;
   final FavoriteRepo _favoriteRepo;
 
-  HomeCubit(this._homeRepo,this._favoriteRepo) : super(Initial());
+  HomeCubit(this._homeRepo, this._favoriteRepo) : super(HomeState());
 
   void emitHomeState(TabType tabType) async {
-    emit(Loading());
+    emit(state.copyWith(uiState: Loading()));
     final ApiResult<NewsResponse> response;
 
-    if (tabType == TabType.top) {
-      response = await _homeRepo.topNews();
-    } else {
-      response = await _homeRepo.category(tabType.name);
-    }
+    response = await _homeRepo.category(tabType.name);
 
     response.when(
       success: (newsResponse) async {
-        emit(SuccessResponse(newsResponse.articles));
+        emit(
+          state.copyWith(
+            uiState: SuccessResponse(),
+            articles: newsResponse.articles,
+          ),
+        );
       },
       failure: (error) {
-        emit(Error(error.toString()));
+        emit(state.copyWith(uiState: Error(error.toString())));
       },
     );
   }
@@ -37,4 +38,3 @@ class HomeCubit extends Cubit<HomeState> {
     await _favoriteRepo.addArticle(article);
   }
 }
-

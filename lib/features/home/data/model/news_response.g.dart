@@ -11,10 +11,14 @@ NewsResponse _$NewsResponseFromJson(Map<String, dynamic> json) => NewsResponse(
       (json['articles'] as List<dynamic>?)
           ?.map((e) => Articles.fromJson(e as Map<String, dynamic>))
           .toList(),
+  totalResults: (json['totalResults'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$NewsResponseToJson(NewsResponse instance) =>
-    <String, dynamic>{'articles': instance.articles};
+    <String, dynamic>{
+      'articles': instance.articles,
+      'totalResults': instance.totalResults,
+    };
 
 Articles _$ArticlesFromJson(Map<String, dynamic> json) => Articles(
   title: json['title'] as String? ?? '',

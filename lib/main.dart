@@ -48,13 +48,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     checkNetworkConnection();
-
-    // Change the system navigation bar color to black
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-          systemNavigationBarColor: background
-      ),
-    );
   }
 
   Future<void> checkNetworkConnection() async {

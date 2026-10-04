@@ -30,5 +30,13 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
   void deleteItem(int id) async {
     await _favoriteRepo.deleteArticle(id);
+
+    final updatedArticles =
+        state.articles.where((article) => article.id != id).toList();
+    emit(state.copyWith(articles: updatedArticles));
+  }
+
+  Future<bool> isItemSaved(String title) async {
+    return await _favoriteRepo.isArticleSaved(title);
   }
 }

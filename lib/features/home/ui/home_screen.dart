@@ -69,7 +69,7 @@ class _HomeWithTabsState extends State<HomeWithTabs>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: TabScreen(TabType.top)),
+          Center(child: TabScreen(TabType.general)),
           Center(child: TabScreen(TabType.sports)),
           Center(child: TabScreen(TabType.technology)),
           Center(child: TabScreen(TabType.health)),

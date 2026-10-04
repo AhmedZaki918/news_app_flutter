@@ -31,16 +31,9 @@ abstract class ApiService {
 
 
   @GET('top-headlines')
-  Future<NewsResponse> topNews(
-      @Query('language') String language,
-      @Query('pageSize') int pageSize,
-      @Query('apiKey') String apiKey);
-
-  @GET('top-headlines')
   Future<NewsResponse> category(
       @Query('language') String language,
       @Query('pageSize') int pageSize,
       @Query('category') String category,
-      @Query('apiKey') String apiKey
-      );
+      @Query('apiKey') String apiKey);
 }

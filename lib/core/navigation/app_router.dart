@@ -2,18 +2,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_app/core/di/app_di.dart';
 import 'package:news_app/core/navigation/routes.dart';
+import 'package:news_app/features/details/logic/details_cubit.dart';
 import 'package:news_app/features/search/logic/search_cubit.dart';
 import 'package:news_app/features/favorite/ui/favorite_screen.dart';
 import 'package:news_app/screens/preference/category_screen.dart';
 import 'package:news_app/screens/preference/source_screen.dart';
 import 'package:news_app/screens/settings_screen.dart';
 
-import '../../features/favorite/logic/favorite_cubit.dart';
 import '../../features/home/data/model/news_response.dart';
 import '../../features/home/ui/home_screen.dart';
 import '../../features/search/ui/search_screen.dart';
 import '../../main.dart';
-import '../../screens/details_screen.dart';
+import '../../features/details/ui/details_screen.dart';
 import '../../features/search/ui/search_tabs.dart';
 import '../../util/category_enum.dart';
 
@@ -54,10 +54,12 @@ final GoRouter router = GoRouter(
       path: Routes.detailsScreen,
       builder: (context, state) {
         final article = state.extra as Articles;
-        return DetailsScreen(article);
+        return BlocProvider(
+          create: (context) => DetailsCubit(getIt())..isItemSaved(article.title.toString()),
+          child: DetailsScreen(article),
+        );
       },
     ),
-
 
     GoRoute(
       path: Routes.searchScreen,

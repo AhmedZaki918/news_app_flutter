@@ -161,9 +161,12 @@ class _SearchScreenState extends State<SearchScreen>
                       ),
                       MainSearchItem(
                         onItemPressed: () {
-                          context.push(Routes.searchTabs, extra: TabType.top);
+                          context.push(
+                            Routes.searchTabs,
+                            extra: TabType.general,
+                          );
                         },
-                        title: 'Top',
+                        title: 'General',
                       ),
                     ],
                   ),
@@ -220,19 +223,10 @@ class _SearchScreenState extends State<SearchScreen>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
+                    padding: const EdgeInsets.only(top: 12.0,left: 16.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        MainSearchItem(
-                          onItemPressed: () {
-                            context.push(
-                              Routes.searchTabs,
-                              extra: TabType.general,
-                            );
-                          },
-                          title: 'General',
-                        ),
                         MainSearchItem(
                           onItemPressed: () {
                             context.push(

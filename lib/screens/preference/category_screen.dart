@@ -4,7 +4,7 @@ import 'package:news_app/res/colors.dart';
 import 'package:news_app/util/shared_preferences.dart';
 
 import '../../core/components/clickable_icon.dart';
-import '../../core/model/source.dart';
+import '../../util/source.dart';
 import '../../util/common.dart';
 
 class CategoryScreen extends StatefulWidget {

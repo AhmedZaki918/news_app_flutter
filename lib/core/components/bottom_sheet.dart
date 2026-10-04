@@ -7,43 +7,47 @@ void showCustomBottomSheet({
   required BuildContext context,
   required IconData firstIcon,
   required String firstLabel,
-  required Function onFirstItemPressed,
+  required Function onSharePressed,
   required IconData secondIcon,
   required String secondLabel,
-  required Function onSecondItemPressed,
+  required Function onSavePressed,
 }) {
   showModalBottomSheet<void>(
     context: context,
+    useSafeArea: true,
     backgroundColor: gray,
     builder: (BuildContext context) {
-      return Container(
-        padding: EdgeInsets.only(bottom: 32.0),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
+      return SafeArea(
+        top: false,
+        child: Container(
+          padding: EdgeInsets.only(bottom: 16.0),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0),
+              topRight: Radius.circular(20.0),
+            ),
           ),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            BottomSheetItem(
-              icon: firstIcon,
-              label: firstLabel,
-              onItemPressed: () {
-                onFirstItemPressed.call();
-              },
-            ),
-            BottomSheetItem(
-              icon: secondIcon,
-              label: secondLabel,
-              onItemPressed: () {
-                onSecondItemPressed.call();
-              },
-            ),
-          ],
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              BottomSheetItem(
+                icon: firstIcon,
+                label: firstLabel,
+                onItemPressed: () {
+                  onSharePressed.call();
+                },
+              ),
+              BottomSheetItem(
+                icon: secondIcon,
+                label: secondLabel,
+                onItemPressed: () {
+                  onSavePressed.call();
+                },
+              ),
+            ],
+          ),
         ),
       );
     },

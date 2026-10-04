@@ -5,23 +5,27 @@ part 'news_response.g.dart';
 @JsonSerializable()
 class NewsResponse {
   List<Articles>? articles;
+  int totalResults;
 
-  NewsResponse({this.articles});
+  NewsResponse({this.articles, this.totalResults = 0});
 
   factory NewsResponse.fromJson(Map<String, dynamic> json) =>
       _$NewsResponseFromJson(json);
 }
 
 @JsonSerializable()
-class Articles{
-  String? title ;
+class Articles {
+  String? title;
+
   @JsonKey(name: 'publishedAt')
   String? time;
-  String? author ;
+  String? author;
+
   @JsonKey(name: 'urlToImage')
   String? image;
   String? description;
-  String? content ;
+  String? content;
+
   String? url;
   Source? source;
 
@@ -30,9 +34,9 @@ class Articles{
     this.time = '',
     this.author = '',
     this.image = '',
-    this.description  = '' ,
-    this.url  = '',
-    this.content  = '',
+    this.description = '',
+    this.url = '',
+    this.content = '',
     this.source,
   });
 

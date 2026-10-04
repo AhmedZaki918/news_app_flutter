@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:news_app/features/home/data/model/news_response.dart';
+import 'package:news_app/features/home/logic/home_state.dart';
+import 'package:news_app/util/category_enum.dart';
 
 import '../../res/colors.dart';
+import '../../util/common.dart';
 import '../navigation/routes.dart';
 import 'list_news_item.dart';
 import 'more_content.dart';
 
 class TabContent extends StatefulWidget {
-  const TabContent({super.key, required this.tabName, required this.news});
+  const TabContent({super.key, required this.tabName, required this.state});
 
   final String tabName;
-  final List<Articles> news;
+  final HomeState state;
 
   @override
   State<TabContent> createState() => _TabContentState();
@@ -21,16 +24,13 @@ class _TabContentState extends State<TabContent> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    var mainItem = widget.news[widget.news.length - 1];
+    var mainItem = widget.state.articles[0];
 
     return ListView(
       children: [
         GestureDetector(
           onTap: () {
-            context.push(
-              Routes.detailsScreen,
-              extra: mainItem
-            );
+            context.push(Routes.detailsScreen, extra: mainItem);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,13 +59,28 @@ class _TabContentState extends State<TabContent> {
                       if (loadingProgress == null) return child;
                       return SizedBox(
                         width: double.infinity,
-                        height: 70.0,
+                        height: 200.0,
                         child: Center(
                           child: CircularProgressIndicator(color: Colors.white),
                         ),
                       );
                     },
                     errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.black38,
+                        width:  double.infinity,
+                        height: 200.0,
+                        child: Center(
+                          child: Text(
+                            'No photo',
+                            style: TextStyle(
+                              color: Colors.white24,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      );
+
                       return SizedBox(width: double.infinity, height: 0.0);
                     },
                   ),
@@ -116,7 +131,7 @@ class _TabContentState extends State<TabContent> {
                         padding: const EdgeInsets.only(left: 16.0),
                         child: Text(
                           textAlign: TextAlign.start,
-                          mainItem.time.toString(),
+                          formatTime(mainItem.time.toString()),
                           style: TextStyle(color: lightGray, fontSize: 16.0),
                         ),
                       ),
@@ -126,7 +141,7 @@ class _TabContentState extends State<TabContent> {
                     padding: const EdgeInsets.only(right: 16.0),
                     child: GestureDetector(
                       onTap: () {
-                        showMoreContent(context, mainItem);
+                        showMoreContent(context, mainItem, false, 0);
                       },
                       child: Icon(Icons.more_vert, color: lightGray),
                     ),
@@ -136,7 +151,7 @@ class _TabContentState extends State<TabContent> {
             ],
           ),
         ),
-        ItemList(news: widget.news),
+        ItemList(articles: widget.state.articles),
       ],
     );
   }

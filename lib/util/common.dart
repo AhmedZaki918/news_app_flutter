@@ -1,11 +1,11 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_app/util/shared_preferences.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../core/model/source.dart';
+import 'source.dart';
 
 
 void shareContent(String? url) {
@@ -18,13 +18,10 @@ void openUrlLink(String? url) async {
   }
 }
 
-IconData displaySaveIcon() {
-  return Icons.bookmark_border;
-  // if (isArticleSaved(key)) {
-  //   return Icons.bookmark;
-  // } else {
-  //   return Icons.bookmark_border;
-  // }
+String formatTime(String dateAndTime){
+  final date = DateTime.parse(dateAndTime).toLocal();
+  final formattedDate = DateFormat('yyyy-MM-dd - h:mm a').format(date);
+  return formattedDate;
 }
 
 String capitalizeFirstLetter(String text) {

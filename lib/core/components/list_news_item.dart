@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:news_app/screens/details_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../features/home/data/model/news_response.dart';
@@ -11,8 +10,9 @@ import 'clickable_icon.dart';
 import 'more_content.dart';
 
 class ItemList extends StatefulWidget {
-  final List<Articles> news;
-  const ItemList({super.key, required this.news});
+  final List<Articles> articles;
+
+  const ItemList({super.key, required this.articles});
 
 
   @override
@@ -20,7 +20,8 @@ class ItemList extends StatefulWidget {
 }
 
 class _ItemListState extends State<ItemList> {
-  String formatTime(String time) {
+
+  String timeAgo(String time) {
     final dateTime = DateTime.parse(time).toLocal();
     return timeago.format(dateTime);
   }
@@ -28,17 +29,21 @@ class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    final articlesCount =  widget.articles.length - 1;
 
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: widget.news.length,
+      itemCount: articlesCount,
       itemBuilder: (context, index) {
+        // Skip first article
+        final article = widget.articles[index + 1];
+
         return GestureDetector(
           onTap: () {
             context.push(
                 Routes.detailsScreen,
-                extra: widget.news[index]
+                extra: article
             );
           },
           child: Row(
@@ -60,7 +65,7 @@ class _ItemListState extends State<ItemList> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       child: Image.network(
-                        widget.news[index].image ?? '',
+                        article.image ?? '',
                         width: screenWidth * 0.30,
                         height: 65.0,
                         fit: BoxFit.cover,
@@ -81,7 +86,7 @@ class _ItemListState extends State<ItemList> {
                           ); // While loading
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          if (isImageNullOrEmpty(widget.news[index].image)) {
+                          if (isImageNullOrEmpty( article.image)) {
                             return Container(
                               color: Colors.black38,
                               width: screenWidth * 0.30,
@@ -119,7 +124,7 @@ class _ItemListState extends State<ItemList> {
                         padding: const EdgeInsets.only(right: 30.0),
                         child: Text(
                           maxLines: 5,
-                          widget.news[index].title.toString(),
+                          article.title.toString(),
                           style: TextStyle(color: Colors.white, fontSize: 17.0),
                         ),
                       ),
@@ -136,14 +141,14 @@ class _ItemListState extends State<ItemList> {
                                   child: Text(
                                     maxLines: 2,
                                     textAlign: TextAlign.start,
-                                    widget.news[index].author.toString(),
+                                    article.author.toString(),
                                     style: TextStyle(color: lightGray),
                                   ),
                                 ),
 
                                 Text(
                                   textAlign: TextAlign.start,
-                                  formatTime(widget.news[index].time.toString()),
+                                  timeAgo( article.time.toString()),
                                   style: TextStyle(color: lightGray),
                                 ),
                               ],
@@ -153,8 +158,7 @@ class _ItemListState extends State<ItemList> {
                             padding: const EdgeInsets.only(right: 16.0),
                             child: GestureDetector(
                               onTap: () {
-                                var article = widget.news[index];
-                                showMoreContent(context, article);
+                                showMoreContent(context, article, false,0);
                               },
                               child: Icon(Icons.more_vert, color: lightGray),
                             ),

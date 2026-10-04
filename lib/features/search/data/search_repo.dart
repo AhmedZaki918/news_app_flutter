@@ -9,14 +9,11 @@ class SearchRepo {
 
   SearchRepo(this._apiService);
 
-  Future<ApiResult<NewsResponse>> search(
-    String keyword,
-    String sortBy,
-  ) async {
+  Future<ApiResult<NewsResponse>> search(String keyword, String sortBy) async {
     try {
       final response = await _apiService.search(
         'en',
-        60,
+        ApiConstants.pageSize,
         keyword,
         sortBy,
         ApiConstants.apiKey,
@@ -35,11 +32,11 @@ class SearchRepo {
     try {
       final response = await _apiService.searchByDomain(
         'en',
-        60,
+        ApiConstants.pageSize,
         keyword,
         sortBy,
         domains,
-        ApiConstants.apiKey
+        ApiConstants.apiKey,
       );
       return ApiResult.success(response);
     } catch (error) {

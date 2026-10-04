@@ -46,11 +46,33 @@ class FavoriteRepo {
     }
   }
 
+  deleteArticleByTime(String time) async {
+    try {
+      await (db.delete(db.articles)
+        ..where((article) => article.time.equals(time))).go();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   deleteAllArticles() async {
     try {
       await db.delete(db.articles).go();
     } catch (e) {
       log(e.toString());
+    }
+  }
+
+  Future<bool> isArticleSaved(String title) async {
+    try {
+      final article =
+          await (db.select(
+            db.articles,
+          )..where((article) => article.title.equals(title))).getSingleOrNull();
+
+      return article != null;
+    } catch (e) {
+      return false;
     }
   }
 }

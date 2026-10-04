@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/components/clickable_icon.dart';
-import '../../core/model/source.dart';
+import '../../util/source.dart';
 import '../../res/colors.dart';
 import '../../util/common.dart';
 import '../../util/shared_preferences.dart';

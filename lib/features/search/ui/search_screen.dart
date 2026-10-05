@@ -13,8 +13,7 @@ import '../../../main.dart';
 import '../../../util/category_enum.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen( {super.key});
-
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -114,9 +113,12 @@ class _SearchScreenState extends State<SearchScreen>
                         _focusNode.unfocus();
 
                         if (isSortTypeExist(sortType)) {
-                          initSearch(sortType,_controller.text);
+                          initSearch(sortType, _controller.text);
                         } else {
-                          initSearch(SortType.publishedAt.name,_controller.text);
+                          initSearch(
+                            SortType.publishedAt.name,
+                            _controller.text,
+                          );
                         }
                       }
                     },
@@ -130,11 +132,10 @@ class _SearchScreenState extends State<SearchScreen>
                 textInputAction: TextInputAction.search,
                 onSubmitted: (value) {
                   if (value.isNotEmpty) {
-
                     if (isSortTypeExist(sortType)) {
-                      initSearch(sortType,value);
+                      initSearch(sortType, value);
                     } else {
-                      initSearch(SortType.publishedAt.name,value);
+                      initSearch(SortType.publishedAt.name, value);
                     }
                   }
                 },
@@ -223,7 +224,7 @@ class _SearchScreenState extends State<SearchScreen>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0,left: 16.0),
+                    padding: const EdgeInsets.only(top: 12.0, left: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -247,7 +248,7 @@ class _SearchScreenState extends State<SearchScreen>
             visible: _isSearchActive,
             child: SearchBlocListener(
               onSearchClicked: (sortType) {
-                initSearch(sortType,_controller.text);
+                initSearch(sortType, _controller.text);
               },
               searchKeyword: _controller.text,
               tabController: _tabController,
@@ -259,7 +260,7 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   void initSearch(String sortType, String keyword) {
-    context.read<SearchCubit>().searchOnNews(sortType,keyword);
+    context.read<SearchCubit>().searchOnNews(sortType, keyword);
   }
 
   bool isSortTypeExist(String sortType) => sortType != '';

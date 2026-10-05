@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:news_app/features/home/data/model/news_response.dart';
 import 'package:news_app/features/home/logic/home_state.dart';
-import 'package:news_app/util/category_enum.dart';
 
 import '../../res/colors.dart';
 import '../../util/common.dart';
@@ -80,8 +78,6 @@ class _TabContentState extends State<TabContent> {
                           ),
                         ),
                       );
-
-                      return SizedBox(width: double.infinity, height: 0.0);
                     },
                   ),
                 ),

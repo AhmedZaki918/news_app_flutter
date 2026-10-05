@@ -7,7 +7,6 @@ import '../../../res/colors.dart';
 import '../../../util/common.dart';
 import '../../../core/navigation/routes.dart';
 
-
 class SearchItem extends StatefulWidget {
   const SearchItem({super.key, required this.news});
   final List<Articles> news;
@@ -33,10 +32,7 @@ class _SearchItemState extends State<SearchItem> {
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
-            context.push(
-              Routes.detailsScreen,
-              extra: widget.news[index]
-            );
+            context.push(Routes.detailsScreen, extra: widget.news[index]);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

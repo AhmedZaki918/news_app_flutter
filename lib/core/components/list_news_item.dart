@@ -4,7 +4,6 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../features/home/data/model/news_response.dart';
 import '../../res/colors.dart';
-import '../../util/common.dart';
 import '../navigation/routes.dart';
 import 'clickable_icon.dart';
 import 'more_content.dart';
@@ -86,28 +85,20 @@ class _ItemListState extends State<ItemList> {
                           ); // While loading
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          if (isImageNullOrEmpty( article.image)) {
-                            return Container(
-                              color: Colors.black38,
-                              width: screenWidth * 0.30,
-                              height: 65.0,
-                              child: Center(
-                                child: Text(
-                                  'No photo',
-                                  style: TextStyle(
-                                    color: Colors.white24,
-                                    fontSize: 12.0,
-                                  ),
+                          return Container(
+                            color: Colors.black38,
+                            width: screenWidth * 0.30,
+                            height: 65.0,
+                            child: Center(
+                              child: Text(
+                                'No photo',
+                                style: TextStyle(
+                                  color: Colors.white24,
+                                  fontSize: 12.0,
                                 ),
                               ),
-                            );
-                          } else {
-                            return SizedBox(
-                              width: screenWidth * 0.30,
-                              height: 65.0,
-                              child: Icon(Icons.error, color: Colors.red),
-                            );
-                          }
+                            ),
+                          );
                         },
                       ),
                     ),

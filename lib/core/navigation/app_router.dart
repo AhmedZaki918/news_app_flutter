@@ -4,17 +4,14 @@ import 'package:news_app/core/di/app_di.dart';
 import 'package:news_app/core/navigation/routes.dart';
 import 'package:news_app/features/details/logic/details_cubit.dart';
 import 'package:news_app/features/search/logic/search_cubit.dart';
-import 'package:news_app/features/favorite/ui/favorite_screen.dart';
 import 'package:news_app/screens/preference/category_screen.dart';
 import 'package:news_app/screens/preference/source_screen.dart';
-import 'package:news_app/screens/settings_screen.dart';
 
-import '../../features/home/data/model/news_response.dart';
-import '../../features/home/ui/home_screen.dart';
-import '../../features/search/ui/search_screen.dart';
-import '../../main.dart';
 import '../../features/details/ui/details_screen.dart';
+import '../../features/home/data/model/news_response.dart';
+import '../../features/search/ui/search_screen.dart';
 import '../../features/search/ui/search_tabs.dart';
+import '../../main.dart';
 import '../../util/category_enum.dart';
 
 final GoRouter router = GoRouter(
@@ -23,21 +20,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Routes.landingPage,
       builder: (context, state) => const HomePage(),
-    ),
-
-    GoRoute(
-      path: Routes.homeScreen,
-      builder: (context, state) => const HomeScreen(),
-    ),
-
-    GoRoute(
-      path: Routes.settingsScreen,
-      builder: (context, state) => const SettingsScreen(),
-    ),
-
-    GoRoute(
-      path: Routes.favoriteScreen,
-      builder: (context, state) => const FavoriteScreen(),
     ),
 
     GoRoute(
@@ -55,7 +37,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final article = state.extra as Articles;
         return BlocProvider(
-          create: (context) => DetailsCubit(getIt())..isItemSaved(article.title.toString()),
+          create:
+              (context) =>
+                  DetailsCubit(getIt())..isItemSaved(article.title.toString()),
           child: DetailsScreen(article),
         );
       },

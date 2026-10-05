@@ -9,6 +9,8 @@ import '../../features/favorite/data/favorite_repo.dart';
 import '../../features/favorite/logic/favorite_cubit.dart';
 import '../../features/home/data/home_repo.dart';
 import '../../features/search/data/search_repo.dart';
+import '../../features/settings/data/settings_repo.dart';
+import '../../features/settings/logic/settings_cubit.dart';
 import '../database/app_database.dart';
 import '../network/api_service.dart';
 import '../network/dio_factory.dart';
@@ -38,4 +40,8 @@ Future<void> setupGetIt() async {
   // Details
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
   getIt.registerLazySingleton<DetailsRepo>(() => DetailsRepo(getIt()));
+
+  // Settings
+  getIt.registerFactory<SettingsCubit>(() => SettingsCubit(getIt()));
+  getIt.registerLazySingleton<SettingsRepo>(() => SettingsRepo());
 }

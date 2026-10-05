@@ -5,12 +5,16 @@ class SearchState {
   final String selectedSource;
   final String sortType;
   final List<Articles> newsItems;
+  final bool isLoadingMore;
+  final bool hasMore;
 
   SearchState({
     this.uiState = const Initial(),
     this.selectedSource = '',
     this.sortType = '',
     this.newsItems = const [],
+    this.isLoadingMore = false,
+    this.hasMore = true
   });
 
   SearchState copyWith({
@@ -18,13 +22,17 @@ class SearchState {
     String? selectedSource,
     List<Articles>? newsItems,
     String? sortType,
-    String? searchKeyword
+    String? searchKeyword,
+    bool? isLoadingMore,
+    bool? hasMore
   }) {
     return SearchState(
       uiState: uiState ?? this.uiState,
       selectedSource: selectedSource ?? this.selectedSource,
       newsItems: newsItems ?? this.newsItems,
-      sortType: sortType ?? this.sortType
+      sortType: sortType ?? this.sortType,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+      hasMore: hasMore ?? this.hasMore
     );
   }
 }

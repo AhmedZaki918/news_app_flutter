@@ -38,14 +38,22 @@ The app features category-based filtering, sorting options, source-specific news
 #### Platforms:
 - Android and IOS
 
-#### Libraries:
-- provider            ^6.1.4
-- http                ^1.3.0
+#### Libraries:    
+- freezed             ^4.0.2
+- json_serializable   ^6.14.1
+- json_annotation     ^4.12.0
+- dio                 ^5.11.1
+- retrofit            ^4.10.0
+- retrofit_generator  ^10.2.11
+- get_it              ^7.6.4
+- flutter_bloc        ^8.1.3
+- go_router           ^18.0.1
+- drift               ^2.35.0
+- drift_flutter       ^0.3.1
+- drift_dev           ^2.35.0
 - flutter_spinkit     ^5.2.1
 - cupertino_icons     ^1.0.8
-- share_plus          ^11.0.0
-- hive                ^2.2.3
-- hive_flutter        ^1.1.0
+- share_plus          ^11.0.0             
 - timeago             ^3.7.1
 - url_launcher        ^6.3.1
 - intl                ^0.20.2

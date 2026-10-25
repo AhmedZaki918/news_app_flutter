@@ -13,6 +13,8 @@ import '../../features/home/data/home_repo.dart';
 import '../../features/search/data/search_repo.dart';
 import '../../features/settings/data/settings_repo.dart';
 import '../../features/settings/logic/settings_cubit.dart';
+import '../../features/source/data/source_repo.dart';
+import '../../features/source/logic/source_cubit.dart';
 import '../database/app_database.dart';
 import '../network/api_service.dart';
 import '../network/dio_factory.dart';
@@ -50,4 +52,8 @@ Future<void> setupGetIt() async {
   // Category
   getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
   getIt.registerLazySingleton<CategoryRepo>(() => CategoryRepo());
+
+  // Source
+  getIt.registerFactory<SourceCubit>(() => SourceCubit(getIt()));
+  getIt.registerLazySingleton<SourceRepo>(() => SourceRepo());
 }

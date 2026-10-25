@@ -5,13 +5,14 @@ import 'package:news_app/core/navigation/routes.dart';
 import 'package:news_app/features/details/logic/details_cubit.dart';
 import 'package:news_app/features/search/logic/search_cubit.dart';
 import 'package:news_app/features/category/ui/category_screen.dart';
-import 'package:news_app/screens/preference/source_screen.dart';
+import 'package:news_app/features/source/ui/source_screen.dart';
 
 import '../../features/category/logic/category_cubit.dart';
 import '../../features/details/ui/details_screen.dart';
 import '../../features/home/data/model/news_response.dart';
 import '../../features/search/ui/search_screen.dart';
 import '../../features/search/ui/search_tabs.dart';
+import '../../features/source/logic/source_cubit.dart';
 import '../../main.dart';
 import '../../util/category_enum.dart';
 
@@ -35,7 +36,12 @@ final GoRouter router = GoRouter(
 
     GoRoute(
       path: Routes.sourceScreen,
-      builder: (context, state) => const SourceScreen(),
+      builder: (context, state) {
+        return BlocProvider(
+          create: (context) => SourceCubit(getIt())..displayNewsSource(),
+          child: SourceScreen(),
+        );
+      },
     ),
 
     GoRoute(

@@ -1,10 +1,13 @@
-
 class SettingsState {
   final String selectedCategory;
   final bool isSoundEnabled;
   final String selectedSource;
 
-  SettingsState({this.selectedCategory = '',this.isSoundEnabled = false,this.selectedSource = ''});
+  SettingsState({
+    this.selectedCategory = '',
+    this.isSoundEnabled = false,
+    this.selectedSource = '',
+  });
 
   SettingsState copyWith({
     String? selectedCategory,
@@ -18,6 +21,3 @@ class SettingsState {
     );
   }
 }
-
-
-
